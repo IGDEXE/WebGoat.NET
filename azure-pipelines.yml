@@ -51,11 +51,11 @@ stages:
 - stage: SAST
   displayName: U&S and Pipeline Scan
   dependsOn: Build
-  checkout: none
   jobs:
   - job: PipelineScan
     displayName: 'Veracode PipelineScan'
     steps:
+    - checkout: none
     - task: DownloadBuildArtifacts@1
       inputs:
         buildType: 'current'
@@ -79,6 +79,7 @@ stages:
   - job: Wrapper
     displayName: 'Veracode U&S'
     steps:
+    - checkout: none
     - task: DownloadBuildArtifacts@1
       inputs:
         buildType: 'current'
