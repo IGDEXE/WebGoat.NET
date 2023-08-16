@@ -64,6 +64,7 @@ stages:
         downloadPath: '$(System.ArtifactsDirectory)'
       displayName: 'Carregando arquivos'
     - script: |
+        ls
         curl -O -L https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
       displayName: 'Download Pipeline Scanner'
     - task: ExtractFiles@1
