@@ -21,11 +21,10 @@ stages:
         vsVersion: 16.0
         msbuildArgs: '/p:OutputPath=$(build.artifactstagingdirectory)\bin /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem  /p:PrecompileBeforePublish=true /p:EnableUpdateable=false /p:DebugSymbols=true  /p:UseMerge=false /p:DeleteAppCodeCompiledFiles=True /p:DeleteExistingFiles=True  /p:WDPMergeOption=CreateSeparateAssembly /p:UseFixedNames=true'
         msbuildArchitecture: x64
-    - task: CmdLine@2
+    - task: PowerShell@2
       inputs:
-        script: |
-          zip -r $(caminhoPacote) $(build.artifactstagingdirectory)/bin/*.dll $(build.artifactstagingdirectory)/bin/*.pdb
-      displayName: 'Criando ZIP'
+        targetType: 'inline'
+        script: 'Compress-Archive -Path "$(build.artifactstagingdirectory)\bin\*.dll", "$(build.artifactstagingdirectory)\bin\*.pdb" -DestinationPath $(caminhoZIP)'
 
     - task: PublishBuildArtifacts@1
       inputs:
@@ -40,10 +39,12 @@ stages:
   - job: SCA
     displayName: 'Veracode SCA'
     steps:
-    - task: CmdLine@2
+    - task: PowerShell@2
       inputs:
+        targetType: 'inline'
         script: |
-          curl -sSL https://download.sourceclear.com/ci.sh | bash -s – scan --update-advisor --allow-dirty
+          iex ((New-Object System.Net.WebClient).DownloadString('https://download.srcclr.com/ci.ps1')) # Faz o download do script
+          srcclr scan --update-advisor --allow-dirty # Executa o scan
       displayName: 'Resultados SCA'
       continueOnError: true
   
