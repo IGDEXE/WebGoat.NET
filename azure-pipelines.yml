@@ -6,7 +6,7 @@ pool:
 
 variables:
   veracodeAppProfile: AzDevOps.$(Build.DefinitionName)
-  caminhoPacote: $(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip
+  caminhoPacote: /drop/$(Build.BuildId).zip
   caminhoZIP: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
 
 stages:
@@ -25,7 +25,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'Compress-Archive -Path "$(build.artifactstagingdirectory)\bin\*.dll", "$(build.artifactstagingdirectory)\bin\*.pdb" -DestinationPath $(caminhoZIP)'
-
+      displayName: 'Cria o pacote'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(caminhoZIP)'
@@ -51,6 +51,7 @@ stages:
 - stage: SAST
   displayName: U&S and Pipeline Scan
   dependsOn: Build
+  checkout: none
   jobs:
   - job: PipelineScan
     displayName: 'Veracode PipelineScan'
