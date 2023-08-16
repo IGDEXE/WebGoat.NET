@@ -6,7 +6,7 @@ pool:
 
 variables:
   veracodeAppProfile: AzDevOps.$(Build.DefinitionName)
-  caminhoPacote: /drop/$(Build.BuildId).zip
+  caminhoPacote: $(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip
   caminhoZIP: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
 
 stages:
