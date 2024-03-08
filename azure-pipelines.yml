@@ -9,6 +9,13 @@ variables:
   caminhoPacote: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
 
 steps:
+- task: VSBuild@1
+  displayName: 'Build solution **\*.sln'
+  inputs:
+    vsVersion: 16.0
+    msbuildArgs: '/p:OutputPath=$(build.artifactstagingdirectory)\bin /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem  /p:PrecompileBeforePublish=true /p:EnableUpdateable=false /p:DebugSymbols=true  /p:UseMerge=false /p:DeleteAppCodeCompiledFiles=True /p:DeleteExistingFiles=True  /p:WDPMergeOption=CreateSeparateAssembly /p:UseFixedNames=true'
+    msbuildArchitecture: x64
+
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
