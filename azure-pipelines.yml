@@ -37,7 +37,6 @@ steps:
               $filesToInclude += "$pdbFile.FullName" + ","
           }
       }
-      $filesToInclude = $filesToInclude.Substring(0, $filesToInclude.Length - 1)
 
       # Se houver arquivos DLL e PDB correspondentes, criar o arquivo zip
       if ($filesToInclude.Count -gt 0) {
