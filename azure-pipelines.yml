@@ -40,6 +40,7 @@ steps:
 
       # Se houver arquivos DLL e PDB correspondentes, criar o arquivo zip
       if ($filesToInclude.Count -gt 0) {
+          Write-Host "$filesToInclude"
           Compress-Archive -Path $filesToInclude -DestinationPath "$destinationPath"
           Write-Host "Arquivo zip criado com sucesso em: $destinationPath"
       } else {
