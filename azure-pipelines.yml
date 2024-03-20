@@ -23,11 +23,28 @@ steps:
       $sourcePath = Get-Location
       $destinationPath = "$(caminhoPacote)"
 
-      # Filtrar os arquivos com as extensões desejadas
-      $filesToInclude = Get-ChildItem -Path $sourcePath -Include *.dll, *.pdb -File -Exclude *Microsoft* -Recurse
+      # Filtrar os arquivos DLL
+      $dllFiles = Get-ChildItem -Path $sourcePath -Filter *.dll -File -Recurse
 
-      # Criar o arquivo zip com os arquivos filtrados
-      Compress-Archive -Path $filesToInclude.FullName -DestinationPath $destinationPath
+      # Inicialize um array para armazenar os arquivos DLL e PDB correspondentes
+      $filesToInclude = @()
+
+      # Para cada arquivo DLL encontrado, verifique se há um arquivo PDB correspondente
+      foreach ($dllFile in $dllFiles) {
+          $pdbFile = Get-ChildItem -Path $sourcePath -Filter "$($dllFile.BaseName).pdb" -File -Recurse
+          if ($pdbFile) {
+              $filesToInclude += $dllFile.FullName
+              $filesToInclude += $pdbFile.FullName
+          }
+      }
+
+      # Se houver arquivos DLL e PDB correspondentes, criar o arquivo zip
+      if ($filesToInclude.Count -gt 0) {
+          Compress-Archive -Path $filesToInclude -DestinationPath "$destinationPath"
+          Write-Host "Arquivo zip criado com sucesso em: $destinationPath"
+      } else {
+          Write-Host "Nenhum par de arquivos DLL e PDB correspondente encontrado."
+      }
   displayName: 'Criando pacote para analise'
 
 - task: PowerShell@2
