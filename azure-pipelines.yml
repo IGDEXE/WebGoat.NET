@@ -33,10 +33,11 @@ steps:
       foreach ($dllFile in $dllFiles) {
           $pdbFile = Get-ChildItem -Path $sourcePath -Filter "$($dllFile.BaseName).pdb" -File -Recurse
           if ($pdbFile) {
-              $filesToInclude += $dllFile.FullName
-              $filesToInclude += $pdbFile.FullName
+              $filesToInclude += "$dllFile.FullName" + ","
+              $filesToInclude += "$pdbFile.FullName" + ","
           }
       }
+      $filesToInclude = $filesToInclude.Substring(0, $filesToInclude.Length - 1)
 
       # Se houver arquivos DLL e PDB correspondentes, criar o arquivo zip
       if ($filesToInclude.Count -gt 0) {
