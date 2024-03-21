@@ -36,8 +36,8 @@ steps:
               $dllNewPath = $dllPath.Replace($sourcePath, "")
               $pdbPath = $pdbFile.FullName
               $pdbNewPath = $pdbPath.Replace($sourcePath, "")
-              Move-Item -Path $dllPath -Destination ".\UploadVeracode$dllNewPath" -Verbose -Force
-              Move-Item -Path $dllPath -Destination ".\UploadVeracode$pdbNewPath" -Verbose -Force
+              Copy-Item -Path $dllPath -Destination ".\UploadVeracode$dllNewPath" -Verbose -Force
+              Copy-Item -Path $dllPath -Destination ".\UploadVeracode$pdbNewPath" -Verbose -Force
           }
       }
 
