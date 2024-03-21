@@ -34,7 +34,7 @@ steps:
       foreach ($dllFile in $dllFiles) {
           $pdbFile = Get-ChildItem -Path $sourcePath -Filter "$($dllFile.BaseName).pdb" -File -Recurse
           if ($pdbFile) {
-              Move-Item -Path "$dllFile.FullName", "$pdbFile.FullName" -Destination ".\UploadVeracode" -Verbose
+              Move-Item -Path $dllFile.FullName, $pdbFile.FullName -Destination ".\UploadVeracode" -Verbose
           }
       }
 
