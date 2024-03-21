@@ -21,6 +21,7 @@ steps:
     targetType: 'inline'
     script: |
       $sourcePath = Get-Location
+      $sourcePath = Get-Location
       $destinationPath = "$(caminhoPacote)"
       New-Item -Path ".\UploadVeracode" -ItemType Directory
 
@@ -35,9 +36,17 @@ steps:
               $dllNewPath = $dllPath.Replace($sourcePath, "")
               $pdbPath = $pdbFile.FullName
               $pdbNewPath = $pdbPath.Replace($sourcePath, "")
-              Move-Item -Path $dllPath -Destination ".\UploadVeracode$dllNewPath" -Verbose
-              Move-Item -Path $dllPath -Destination ".\UploadVeracode$pdbNewPath" -Verbose
+              Move-Item -Path $dllPath -Destination ".\UploadVeracode$dllNewPath" -Verbose -Force
+              Move-Item -Path $dllPath -Destination ".\UploadVeracode$pdbNewPath" -Verbose -Force
           }
+      }
+
+      # Obtém todos os arquivos JSON no diretório de origem
+      $arquivosJSON = Get-ChildItem -Path $sourcePath -Filter *.json
+
+      # Move cada arquivo JSON para o diretório de destino
+      foreach ($arquivo in $arquivosJSON) {
+          Move-Item -Path $arquivo.FullName -Destination ".\UploadVeracode" -Verbose -Force
       }
 
       Compress-Archive -Path ".\UploadVeracode" -DestinationPath "$destinationPath"
