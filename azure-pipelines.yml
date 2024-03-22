@@ -25,7 +25,7 @@ steps:
       New-Item -Path ".\UploadVeracode" -ItemType Directory
 
       # Filtrar os arquivos DLL
-      $dllFiles = Get-ChildItem -Path $sourcePath -Include *.dll -File -Recurse | Where-Object { $_.FullName -notmatch 'Microsoft|UnitTest|Xunit|Test|\\obj\\|ref|refint' }
+      $dllFiles = Get-ChildItem -Path $sourcePath -Include *.dll -File -Recurse | Where-Object { $_.FullName -notmatch 'Microsoft|UnitTest|Xunit|Test' }
 
       # Para cada arquivo DLL encontrado, verifique se há um arquivo PDB correspondente
       foreach ($dllFile in $dllFiles) {
