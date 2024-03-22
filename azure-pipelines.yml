@@ -36,7 +36,7 @@ steps:
           }
       }
       # Obtém todos os arquivos JSON no diretório de origem
-      $arquivosConfig = Get-ChildItem -Path $sourcePath -Filter *.json, *.yml, *.xml
+      $arquivosConfig = Get-ChildItem -Path $sourcePath -Include *.json, *.yml, *.xml
       # Move cada arquivo JSON para o diretório de destino
       foreach ($arquivo in $arquivosConfig) {
           Move-Item -Path $arquivo.FullName -Destination ".\UploadVeracode" -Verbose -Force
