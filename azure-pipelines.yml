@@ -29,7 +29,7 @@ steps:
 
       # Para cada arquivo DLL encontrado, verifique se há um arquivo PDB correspondente
       foreach ($dllFile in $dllFiles) {
-      $pdbFile = Get-ChildItem -Path $sourcePath -Filter "$($dllFile.BaseName).pdb" -File -Recurse | Where-Object { $_.FullName -notmatch 'Microsoft|UnitTest|Xunit|Test|\\obj\\|ref|refint' }
+      $pdbFile = Get-ChildItem -Path $sourcePath -Filter "$($dllFile.BaseName).pdb" -File -Recurse | Where-Object { $_.FullName -notmatch 'Microsoft|UnitTest|Xunit|Test' }
       if ($pdbFile) {
           Move-Item -Path $dllFile.FullName -Destination ".\UploadVeracode" -Verbose
           Move-Item -Path $pdbFile.FullName -Destination ".\UploadVeracode" -Verbose
