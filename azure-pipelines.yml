@@ -21,7 +21,7 @@ steps:
     targetType: 'inline'
     script: |
       $sourcePath = Get-Location
-      $destinationPath = "$caminhoPacote"
+      $destinationPath = "$(caminhoPacote)"
       New-Item -Path ".\UploadVeracode" -ItemType Directory
 
       # Filtrar os arquivos DLL
