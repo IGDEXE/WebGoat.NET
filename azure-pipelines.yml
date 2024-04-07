@@ -58,13 +58,13 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $businessUnit = "Ação tribo"
+      $businessUnit = "Ação 123 tribo"
       # Recebe o App ID com base no nome da aplicacao dentro do Veracode
       [xml]$INFO = $(java -jar veracode-wrapper.jar -vid $(VeracodeID) -vkey $(VeracodeKey) -action GetAppList | Select-String -Pattern $(veracodeAppProfile))[0]
       # Filtra o App ID
       $appID = $INFO.app.app_id
       # Faz a modificação de BU
-      Write-Host "$(veracodeAppProfile) - $appID - $businessUnit"
+      Write-Host "Add $veracodeAppName (ID: $appID) in $businessUnit"
       java -jar veracode-wrapper.jar -vid $(VeracodeID) -vkey $(VeracodeKey) -action updateapp -appid $appID -businessunit "$businessUnit"
   displayName: 'Veracode Update BU'
   continueOnError: true
