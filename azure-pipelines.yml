@@ -58,7 +58,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $businessUnit = "TesteAção"
+      $businessUnit = "Ação tribo"
       # Recebe o App ID com base no nome da aplicacao dentro do Veracode
       [xml]$INFO = $(java -jar veracode-wrapper.jar -vid $(VeracodeID) -vkey $(VeracodeKey) -action GetAppList | Select-String -Pattern $(veracodeAppProfile))[0]
       # Filtra o App ID
