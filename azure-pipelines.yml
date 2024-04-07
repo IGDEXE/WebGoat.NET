@@ -64,7 +64,7 @@ steps:
       # Filtra o App ID
       $appID = $INFO.app.app_id
       # Faz a modificação de BU
-      Write-Host "$(veracodeAppProfile) - $appID"
+      Write-Host "$(veracodeAppProfile) - $appID - $businessUnit"
       java -jar veracode-wrapper.jar -vid $(VeracodeID) -vkey $(VeracodeKey) -action updateapp -appid $appID -businessunit "$businessUnit"
   displayName: 'Veracode Update BU'
   continueOnError: true
