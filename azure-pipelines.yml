@@ -76,3 +76,9 @@ steps:
       java -jar veracode-wrapper.jar -vid $(VeracodeID) -vkey $(VeracodeKey) -action uploadandscan -appname $(veracodeAppProfile) -createprofile true  -version $(build.buildNumber) -filepath $(caminhoPacote)
   displayName: 'Veracode U&S'
   continueOnError: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(caminhoPacote)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
